@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
@@ -32,7 +33,8 @@ fun BottomNav() {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {
-        Modifier.padding(it)
+        Modifier
+            .padding(it).padding(vertical = 10.dp)
         BottomNavGraph(
             navController = navController
         )
@@ -52,8 +54,7 @@ fun BottomBar(navController: NavHostController) {
 
     Row(
         modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp, top = 8.dp, bottom = 8.dp)
-            .background(Color.Transparent)
+            .background(Color.White)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -85,7 +86,7 @@ fun RowScope.AddItem(
 
     Box(
         modifier = Modifier
-            .height(40.dp)
+            .height(60.dp).padding(vertical = 10.dp)
             .clip(CircleShape)
             .background(background)
             .clickable(onClick = {
@@ -97,7 +98,8 @@ fun RowScope.AddItem(
     ) {
         Row(
             modifier = Modifier
-                .padding(start = 10.dp, end = 10.dp, top = 8.dp, bottom = 8.dp),
+                .padding(start = 15.dp, end = 15.dp, top = 8.dp, bottom = 8.dp)
+                .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -109,7 +111,8 @@ fun RowScope.AddItem(
             AnimatedVisibility(visible = selected) {
                 Text(
                     text = screen.title,
-                    color = contentColor
+                    color = contentColor,
+                    fontWeight = FontWeight(500)
                 )
             }
         }

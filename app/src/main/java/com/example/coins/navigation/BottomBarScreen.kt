@@ -10,21 +10,21 @@ sealed class BottomBarScreen(
     val icon_focused: Int
 ) {
 
-    object Home: BottomBarScreen(
+    object Home : BottomBarScreen(
         route = "home",
         title = "Home",
         icon = R.drawable.home,
         icon_focused = R.drawable.home_focused
     )
 
-    object History: BottomBarScreen(
+    object History : BottomBarScreen(
         route = "history",
         title = "History",
         icon = R.drawable.history,
         icon_focused = R.drawable.history_focused
     )
 
-    object Statistics: BottomBarScreen(
+    object Statistics : BottomBarScreen(
         route = "statistics",
         title = "Statistics",
         icon = R.drawable.statistics,
@@ -32,3 +32,5 @@ sealed class BottomBarScreen(
     )
 
 }
+
+

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun StatisticsScreen() {
+fun ConverterScreen() {
 
     Column(
         modifier = Modifier
@@ -20,7 +20,7 @@ fun StatisticsScreen() {
             .background(Color.White)
             .padding(bottom = 60.dp),
     ) {
-        Text(text = "Statistics Screen", fontSize = 20.sp)
+        Text(text = "Converter screen", fontSize = 20.sp)
     }
 
 }
