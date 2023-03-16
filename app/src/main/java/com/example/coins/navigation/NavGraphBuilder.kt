@@ -13,7 +13,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             HomeScreen(onNavigateToConverter = { navController.navigate(SubNavScreen.Converter.route) })
         }
         composable(route = SubNavScreen.Converter.route) {
-            ConverterScreen()
+            ConverterScreen(onNavigateToHome = { navController.navigate("main") })
         }
     }
 }
