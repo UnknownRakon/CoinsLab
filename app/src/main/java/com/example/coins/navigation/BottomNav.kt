@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNav() {
     val navController = rememberNavController()
@@ -34,7 +32,8 @@ fun BottomNav() {
         bottomBar = { BottomBar(navController = navController) }
     ) {
         Modifier
-            .padding(it).padding(vertical = 10.dp)
+            .padding(it)
+            .padding(vertical = 10.dp)
         BottomNavGraph(
             navController = navController
         )
@@ -79,14 +78,15 @@ fun RowScope.AddItem(
     val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
 
     val background =
-        if (selected) MaterialTheme.colors.primary.copy(alpha = 0.6f) else Color.Transparent
+        if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.6f) else Color.Transparent
 
     val contentColor =
         if (selected) Color.White else Color.Black
 
     Box(
         modifier = Modifier
-            .height(60.dp).padding(vertical = 10.dp)
+            .height(60.dp)
+            .padding(vertical = 10.dp)
             .clip(CircleShape)
             .background(background)
             .clickable(onClick = {

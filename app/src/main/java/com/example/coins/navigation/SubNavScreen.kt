@@ -11,4 +11,9 @@ sealed class SubNavScreen(
         route = "converter",
         title = "converter",
     )
+
+    object Filters : SubNavScreen(
+        route = "filters",
+        title = "filters",
+    )
 }

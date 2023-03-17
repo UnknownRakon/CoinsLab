@@ -18,9 +18,7 @@ fun BottomNavGraph(
         startDestination = BottomBarScreen.Home.route,
     ) {
         homeGraph(navController)
-        composable(route = BottomBarScreen.History.route) {
-            HistoryScreen()
-        }
+        historyGraph(navController)
         composable(route = BottomBarScreen.Statistics.route) {
             StatisticsScreen()
         }

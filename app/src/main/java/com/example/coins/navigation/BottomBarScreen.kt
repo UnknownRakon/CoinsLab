@@ -12,21 +12,21 @@ sealed class BottomBarScreen(
 
     object Home : BottomBarScreen(
         route = "home",
-        title = "Home",
+        title = "Обмен",
         icon = R.drawable.home,
         icon_focused = R.drawable.home_focused
     )
 
     object History : BottomBarScreen(
         route = "history",
-        title = "History",
+        title = "История",
         icon = R.drawable.history,
         icon_focused = R.drawable.history_focused
     )
 
     object Statistics : BottomBarScreen(
         route = "statistics",
-        title = "Statistics",
+        title = "Аналитика",
         icon = R.drawable.statistics,
         icon_focused = R.drawable.statistics_focused
     )

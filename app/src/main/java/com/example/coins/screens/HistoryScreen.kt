@@ -4,10 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.Composable
@@ -25,8 +25,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Composable
-fun HistoryScreen() {
-    val itemsList = listOf<ExchangeOperation>(
+fun HistoryScreen(onNavigateToFilters: () -> Unit) {
+    val itemsList = listOf(
         ExchangeOperation(
             firstCurrency = com.example.coins.data.Currency(id = 1, name = "EUR"),
             firstCurrencyAmount = 12,
@@ -56,14 +56,14 @@ fun HistoryScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "История обменов", fontSize = 20.sp)
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { onNavigateToFilters() }) {
                 Icon(
                     painterResource(id = R.drawable.filters),
                     contentDescription = "filters",
                     modifier = Modifier
                         .padding(5.dp)
                         .size(20.dp),
-                    tint = MaterialTheme.colors.primary.copy(alpha = 0.6f)
+                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
                 )
             }
         }
