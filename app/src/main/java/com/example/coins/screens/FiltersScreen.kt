@@ -1,6 +1,7 @@
 package com.example.coins.screens
 
 import android.util.Range
+import android.widget.CalendarView
 import android.widget.DatePicker
 import com.example.coins.components.MySelect
 import androidx.compose.foundation.background
@@ -15,8 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coins.data.Option
+import com.maxkeppeker.sheets.core.models.base.ButtonStyle
 import com.maxkeppeker.sheets.core.models.base.SelectionButton
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.CalendarView
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
@@ -41,8 +44,6 @@ fun FiltersScreen(onNavigateToHistory: () -> Unit) {
         val value = Range(LocalDate.now(), LocalDate.now())
         mutableStateOf(value)
     }
-
-    val calendarState = rememberUseCaseState()
 
     Column(
         modifier = Modifier
@@ -73,20 +74,20 @@ fun FiltersScreen(onNavigateToHistory: () -> Unit) {
             )
             if (selectedPeriod.id === 4) {
                 CalendarView(
+                    useCaseState = rememberUseCaseState(),
                     config = CalendarConfig(
                         style = CalendarStyle.MONTH,
-                        locale = Locale("ru", "RU")
                     ),
                     selection = CalendarSelection.Period(
                         selectedRange = selectedDateRange.value,
-                        onSelectRange = { startDate, endDate ->
-                            selectedDateRange.value = Range(startDate, endDate)
-                        },
-                        withButtonView = false
-                    ),
-
-                    header = null,
-                    useCaseState = calendarState
+                        negativeButton = null,
+                        positiveButton = SelectionButton(
+                            text = "Подтвердить",
+                            type = ButtonStyle.FILLED,
+                        )
+                    ) { startDate, endDate ->
+                        selectedDateRange.value = Range(startDate, endDate)
+                    },
                 )
             }
             Button(

@@ -2,6 +2,7 @@ package com.example.coins.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -26,6 +27,19 @@ fun StatisticsScreen() {
     )
     var selectedCurrency by remember {
         mutableStateOf(currencyOptions[0])
+    }
+    var charData by remember {
+        mutableStateOf(
+            listOf(
+                LineData(xValue = "Пн", yValue = 2f),
+                LineData(xValue = "Вт", yValue = 1f),
+                LineData(xValue = "Ср", yValue = 2f),
+                LineData(xValue = "Чт", yValue = 5f),
+                LineData(xValue = "Пт", yValue = 4f),
+                LineData(xValue = "Cб", yValue = 6f),
+                LineData(xValue = "Вс", yValue = 0f)
+            )
+        )
     }
     Column(
         modifier = Modifier
@@ -60,22 +74,22 @@ fun StatisticsScreen() {
                     .fillMaxWidth()
                     .height(400.dp),
                 color = MaterialTheme.colorScheme.primary,
-                lineData = listOf(
-                    LineData(xValue = "Пн", yValue = 2f),
-                    LineData(xValue = "Вт", yValue = 1f),
-                    LineData(xValue = "Ср", yValue = 2f),
-                    LineData(xValue = "Чт", yValue = 5f),
-                    LineData(xValue = "Пт", yValue = 4f),
-                    LineData(xValue = "Cб", yValue = 6f),
-                    LineData(xValue = "Вс", yValue = 0f)
-                )
+                lineData = charData
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp), horizontalArrangement = Arrangement.Center
+                    .padding(top = 10.dp), horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(text = "Кнопки", fontSize = 20.sp)
+                Button(onClick = { charData = charData.slice(0..charData.size / 2 - 1) }) {
+                    Text(text = "Hеделя")
+                }
+                Button(onClick = { charData = charData.plus(charData) }) {
+                    Text(text = "2 Hедели")
+                }
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Месяц")
+                }
             };
         }
     }
