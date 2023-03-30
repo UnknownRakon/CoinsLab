@@ -1,13 +1,19 @@
 package com.example.coins.navigation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,26 +28,57 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.coins.ui.theme.CoinsTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun BottomNav() {
-    val navController = rememberNavController()
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
-    ) {
-        Modifier
-            .padding(it)
-            .padding(vertical = 10.dp)
-        BottomNavGraph(
-            navController = navController
-        )
+    CoinsTheme {
+        val navController = rememberNavController()
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+        when (navBackStackEntry?.destination?.route) {
+            "homeMain" -> {
+                bottomBarState.value = true
+            }
+            "historyMain" -> {
+                bottomBarState.value = true
+            }
+            BottomBarScreen.Statistics.route -> {
+                // Show BottomBar and TopBar
+                bottomBarState.value = true
+            }
+            SubNavScreen.Filters.route -> {
+                bottomBarState.value = false
+            }
+            SubNavScreen.Converter.route -> {
+                bottomBarState.value = false
+            }
+        }
+
+        Scaffold(
+            bottomBar = {
+                BottomBar(
+                    navController = navController,
+                    bottomBarState = bottomBarState
+                )
+            }
+        ) {
+            Modifier
+                .padding(it)
+                .padding(vertical = 10.dp)
+            BottomNavGraph(
+                navController = navController
+            )
+        }
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, bottomBarState: MutableState<Boolean>) {
     val screens = listOf(
         BottomBarScreen.Home,
         BottomBarScreen.History,
@@ -51,21 +88,28 @@ fun BottomBar(navController: NavHostController) {
     val navStackBackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navStackBackEntry?.destination
 
-    Row(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navController
-            )
-        }
-    }
+    AnimatedVisibility(
+        visible = bottomBarState.value,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+
+            Row(
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                screens.forEach { screen ->
+                    AddItem(
+                        screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navController
+                    )
+                }
+            }
+        })
 
 }
 
