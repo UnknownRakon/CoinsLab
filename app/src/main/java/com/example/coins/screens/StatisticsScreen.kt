@@ -11,10 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coins.components.MySelect
+import com.example.coins.components.Combobox
 import com.example.coins.data.Option
-import com.himanshoe.charty.common.dimens.ChartDimens
-import com.himanshoe.charty.line.CurveLineChart
 import com.himanshoe.charty.line.LineChart
 import com.himanshoe.charty.line.model.LineData
 
@@ -58,7 +56,7 @@ fun StatisticsScreen() {
             ) {
                 Text(text = "Аналитика", fontSize = 20.sp)
             };
-            MySelect(
+            Combobox(
                 label = "Выбор валюты",
                 options = currencyOptions,
                 onChange = { selectedItem ->

@@ -1,9 +1,7 @@
 package com.example.coins.screens
 
+import android.util.Log
 import android.util.Range
-import android.widget.CalendarView
-import android.widget.DatePicker
-import com.example.coins.components.MySelect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -15,11 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.coins.components.Combobox
+import com.example.coins.components.MultiCombobox
 import com.example.coins.data.Option
 import com.maxkeppeker.sheets.core.models.base.ButtonStyle
 import com.maxkeppeker.sheets.core.models.base.SelectionButton
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.CalendarView
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
@@ -45,6 +44,16 @@ fun FiltersScreen(onNavigateToHistory: () -> Unit) {
         mutableStateOf(value)
     }
 
+    val currencyOptions = listOf(
+        Option(id = 1, label = "RUB"),
+        Option(id = 2, label = "USD"),
+        Option(id = 3, label = "EUR"),
+    )
+
+    var selectedCurrencyList by remember {
+        mutableStateOf(emptyList<Option>())
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,7 +71,19 @@ fun FiltersScreen(onNavigateToHistory: () -> Unit) {
             ) {
                 Text(text = "Фильтры", fontSize = 20.sp)
             };
-            MySelect(
+            MultiCombobox(
+                label = "Выбор валют",
+                options = currencyOptions,
+                onChange = { selectedOptions ->
+                    run {
+                        selectedCurrencyList = selectedOptions
+                    }
+                    Log.d("selected", selectedOptions.toString())
+                },
+                value = selectedCurrencyList,
+                placeholder = "Выберите валюты"
+            )
+            Combobox(
                 label = "Выбор периода",
                 options = periodOptions,
                 onChange = { selectedItem ->
@@ -97,5 +118,4 @@ fun FiltersScreen(onNavigateToHistory: () -> Unit) {
             }
         }
     }
-
 }

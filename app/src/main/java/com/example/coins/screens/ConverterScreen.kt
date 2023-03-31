@@ -48,7 +48,6 @@ fun ConverterScreen(onNavigateToHome: () -> Unit) {
                 onValueChange = {},
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = { Text("RUB") },
-                readOnly = true
             )
             Button(
                 onClick = { onNavigateToHome() }
